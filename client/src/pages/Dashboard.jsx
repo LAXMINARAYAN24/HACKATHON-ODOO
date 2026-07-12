@@ -117,13 +117,16 @@ const Dashboard = () => {
   const greeting = new Date().getHours() < 12 ? "Good morning" : new Date().getHours() < 18 ? "Good afternoon" : "Good evening";
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="page-container">
       {/* Header */}
-      <div className="flex items-start justify-between">
+      <div className="page-header">
         <div>
-          <h1 className="page-title">
-            {greeting}, {user?.name?.split(" ")[0] || "there"} 👋
-          </h1>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-primary-400 text-xl">◆</span>
+            <h1 className="page-title">
+              {greeting}, {user?.name?.split(" ")[0] || "there"}
+            </h1>
+          </div>
           <p className="page-subtitle capitalize">
             {roleLabel} · {user?.department?.name || "No department assigned"}
           </p>
