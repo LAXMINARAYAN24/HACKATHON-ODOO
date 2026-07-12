@@ -586,4 +586,4 @@ Make sure you're using the exact passwords from the seed:
 
 ---
 
-> Built with ❤️ for **Odoo Hackathon 2026** by Team AssetFlow
+> Built  for **Odoo Hackathon 2026** by Team AssetFlow
