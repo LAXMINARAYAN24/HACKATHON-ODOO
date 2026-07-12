@@ -8,6 +8,10 @@ import Signup from "./pages/Signup.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import OrganizationSetup from "./pages/OrganizationSetup.jsx";
 
+// ── Mahek-owned pages (integrated)
+import BookingPage from "./pages/BookingPage.jsx";
+import MaintenancePage from "./pages/MaintenancePage.jsx";
+
 // ── Shared layout & guards
 import DashboardLayout from "./layouts/DashboardLayout.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
@@ -70,9 +74,9 @@ const App = () => {
             <Route path="/allocations" element={<ComingSoon module="Allocation & Transfer" owner="Jeny Bhatt" />} />
             <Route path="/transfers" element={<ComingSoon module="Transfer Requests" owner="Jeny Bhatt" />} />
 
-            {/* ── MAHEK placeholder (replace after feat/booking-maintenance merges) ── */}
-            <Route path="/bookings" element={<ComingSoon module="Resource Booking" owner="Mahek" />} />
-            <Route path="/maintenance" element={<ComingSoon module="Maintenance Management" owner="Mahek" />} />
+            {/* ── MAHEK pages (integrated) ── */}
+            <Route path="/bookings" element={<BookingPage />} />
+            <Route path="/maintenance" element={<MaintenancePage />} />
 
             {/* ── SATYAM placeholder (replace after feat/audit-reports merges) ── */}
             <Route path="/audits" element={<ComingSoon module="Audit Management" owner="Satyam" />} />

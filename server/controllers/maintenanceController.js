@@ -1,5 +1,6 @@
-const MaintenanceRequest = require('../models/MaintenanceRequest');
-const Asset = require('../models/Asset');
+import MaintenanceRequest from '../models/MaintenanceRequest.js';
+import Asset from '../models/Asset.js';
+
 
 // ------------------------------------------------------------------
 // POST /api/maintenance
@@ -380,7 +381,7 @@ const resolveRequest = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   createRequest,
   getAllRequests,
   getRequestById,

@@ -18,8 +18,8 @@ import userRoutes from "./routes/users.js";
 // import transferRoutes from "./routes/transfers.js";
 //
 // MAHEK (feat/booking-maintenance):
-// import bookingRoutes from "./routes/bookings.js";
-// import maintenanceRoutes from "./routes/maintenance.js";
+import bookingRoutes from "./routes/bookings.js";
+import maintenanceRoutes from "./routes/maintenance.js";
 //
 // SATYAM (feat/audit-reports):
 // import auditRoutes from "./routes/audits.js";
@@ -59,8 +59,8 @@ app.use("/api/users", userRoutes);
 // app.use("/api/transfers", transferRoutes);
 //
 // MAHEK:
-// app.use("/api/bookings", bookingRoutes);
-// app.use("/api/maintenance", maintenanceRoutes);
+app.use("/api/bookings", bookingRoutes);
+app.use("/api/maintenance", maintenanceRoutes);
 //
 // SATYAM:
 // app.use("/api/audits", auditRoutes);
