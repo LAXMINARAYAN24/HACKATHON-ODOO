@@ -265,7 +265,8 @@
   ══════════════════════════════════════════════════════════════════════ */
 
   .page-container {
-    @apply p-6 space-y-6 animate-fade-in;
+    @apply p-6 space-y-6;
+    animation: fade-in 0.2s ease-out;
   }
 
   .page-title {
