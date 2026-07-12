@@ -22,10 +22,10 @@ import bookingRoutes from "./routes/bookings.js";
 import maintenanceRoutes from "./routes/maintenance.js";
 //
 // SATYAM (feat/audit-reports):
-// import auditRoutes from "./routes/audits.js";
-// import reportRoutes from "./routes/reports.js";
-// import notificationRoutes from "./routes/notifications.js";
-// import activityLogRoutes from "./routes/activityLogs.js";
+import auditRoutes from "./routes/audits.js";
+import reportRoutes from "./routes/reports.js";
+import notificationRoutes from "./routes/notifications.js";
+import activityLogRoutes from "./routes/activityLogs.js";
 
 const app = express();
 
@@ -63,10 +63,10 @@ app.use("/api/bookings", bookingRoutes);
 app.use("/api/maintenance", maintenanceRoutes);
 //
 // SATYAM:
-// app.use("/api/audits", auditRoutes);
-// app.use("/api/reports", reportRoutes);
-// app.use("/api/notifications", notificationRoutes);
-// app.use("/api/activity-logs", activityLogRoutes);
+app.use("/api/audits", auditRoutes);
+app.use("/api/reports", reportRoutes);
+app.use("/api/notifications", notificationRoutes);
+app.use("/api/activity-logs", activityLogRoutes);
 
 // ── 404 handler 
 app.use("*", (req, res) => {

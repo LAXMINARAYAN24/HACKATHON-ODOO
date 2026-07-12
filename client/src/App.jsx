@@ -12,6 +12,11 @@ import OrganizationSetup from "./pages/OrganizationSetup.jsx";
 import BookingPage from "./pages/BookingPage.jsx";
 import MaintenancePage from "./pages/MaintenancePage.jsx";
 
+// ── Satyam-owned pages (integrated)
+import AuditPage from "./pages/AuditPage.jsx";
+import ReportsPage from "./pages/ReportsPage.jsx";
+import NotificationsPage from "./pages/NotificationsPage.jsx";
+
 // ── Shared layout & guards
 import DashboardLayout from "./layouts/DashboardLayout.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
@@ -78,10 +83,10 @@ const App = () => {
             <Route path="/bookings" element={<BookingPage />} />
             <Route path="/maintenance" element={<MaintenancePage />} />
 
-            {/* ── SATYAM placeholder (replace after feat/audit-reports merges) ── */}
-            <Route path="/audits" element={<ComingSoon module="Audit Management" owner="Satyam" />} />
-            <Route path="/reports" element={<ComingSoon module="Reports & Analytics" owner="Satyam" />} />
-            <Route path="/notifications" element={<ComingSoon module="Notifications" owner="Satyam" />} />
+            {/* ── SATYAM pages (integrated) ── */}
+            <Route path="/audits" element={<AuditPage />} />
+            <Route path="/reports" element={<ReportsPage />} />
+            <Route path="/notifications" element={<NotificationsPage />} />
           </Route>
         </Route>
 
