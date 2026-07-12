@@ -17,7 +17,7 @@ A full-stack enterprise SaaS application for end-to-end management of organizati
 
 ---
 
-## 📑 Table of Contents
+##  Table of Contents
 
 - [Overview](#overview)
 - [Team & Module Ownership](#team--module-ownership)
@@ -210,7 +210,7 @@ cp ../.env.example .env
 Edit `server/.env`:
 
 ```env
-# ⚠️ Use a direct shard URI, NOT the SRV format
+#  Use a direct shard URI, NOT the SRV format
 MONGO_URI=mongodb://<user>:<pass>@<shard-host>:27017/<dbname>?ssl=true&authSource=admin&retryWrites=true&w=majority
 
 JWT_SECRET=your_super_secret_jwt_key_at_least_32_chars
@@ -236,10 +236,10 @@ node seeds/auditSeed.js          # Seed audit cycles, notifications
 
 | Role | Email | Password |
 |---|---|---|
-| Admin | `admin@assetflow.com` | `Admin@1234` |
-| Asset Manager | `jeny@assetflow.com` | `Employee@1234` |
-| Dept. Head | `mahek@assetflow.com` | `Employee@1234` |
-| Employee | `satyam@assetflow.com` | `Employee@1234` |
+| Admin | `admin@assetflow.com` | `` |
+| Asset Manager | `jeny@assetflow.com` | `` |
+| Dept. Head | `mahek@assetflow.com` | `` |
+| Employee | `satyam@assetflow.com` | `` |
 
 ---
 
@@ -463,7 +463,7 @@ Creates (requires main seed to have run first):
 - 7 sample notifications (allocation, maintenance, transfer types)
 - 2 activity log entries
 
-> ⚠️ Running `npm run seed` again will **drop all existing data** and re-seed.
+>  Running `npm run seed` again will **drop all existing data** and re-seed.
 
 ---
 
