@@ -1,0 +1,20 @@
+# Environment variables — never commit real secrets
+.env
+*.env.local
+
+# Node
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+AssetFlow_Antigravity_Final_Development_Plan_v1.0_FROZEN.md
