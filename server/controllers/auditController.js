@@ -1,9 +1,5 @@
 /**
- * auditController.js — owned by Satyam (feat/audit-reports)
- *
- * Cross-module model references (User, Department, Asset) are resolved at
- * runtime via mongoose.model() after all routes are mounted in server.js.
- * No duplicate schemas; no stub files.
+ * Audit controller
  */
 import mongoose from 'mongoose';
 import AuditCycle from '../models/AuditCycle.js';
@@ -12,14 +8,14 @@ import AuditItem from '../models/AuditItem.js';
 import ActivityLog from '../models/ActivityLog.js';
 import { createNotification } from '../utils/notify.js';
 
-// ─── Runtime model resolution (teammate-owned, registered at startup) ─────────
+// Runtime model resolution
 const Asset = () => mongoose.model('Asset');
 
-// ─── Explicit activity logger ─────────────────────────────────────────────────
+// Explicit activity logger
 const log = (userId, action, entity, entityId, metadata = {}) =>
   ActivityLog.create({ user: userId, action, entity, entityId, metadata }).catch(console.error);
 
-// ─── GET /api/audits ──────────────────────────────────────────────────────────
+// GET /api/audits
 export const listCycles = async (req, res) => {
   try {
     const cycles = await AuditCycle.find()
@@ -33,7 +29,7 @@ export const listCycles = async (req, res) => {
   }
 };
 
-// ─── GET /api/audits/:id ──────────────────────────────────────────────────────
+// GET /api/audits/:id
 export const getCycle = async (req, res) => {
   try {
     const cycle = await AuditCycle.findById(req.params.id)
@@ -51,7 +47,7 @@ export const getCycle = async (req, res) => {
   }
 };
 
-// ─── POST /api/audits ─────────────────────────────────────────────────────────
+// POST /api/audits
 export const createCycle = async (req, res) => {
   try {
     const { name, scopeDepartment, startDate, endDate } = req.body;
@@ -83,7 +79,7 @@ export const createCycle = async (req, res) => {
   }
 };
 
-// ─── POST /api/audits/:id/assign ──────────────────────────────────────────────
+// POST /api/audits/:id/assign
 export const assignAuditors = async (req, res) => {
   try {
     const { auditorIds } = req.body;
@@ -118,7 +114,7 @@ export const assignAuditors = async (req, res) => {
   }
 };
 
-// ─── GET /api/audits/:id/items ────────────────────────────────────────────────
+// GET /api/audits/:id/items
 export const listItems = async (req, res) => {
   try {
     const cycle = await AuditCycle.findById(req.params.id).populate('scopeDepartment', 'name');
@@ -134,7 +130,7 @@ export const listItems = async (req, res) => {
   }
 };
 
-// ─── PATCH /api/audits/:id/items/:assetId ────────────────────────────────────
+// PATCH /api/audits/:id/items/:assetId
 export const updateItem = async (req, res) => {
   try {
     const { verification, notes } = req.body;
@@ -174,7 +170,7 @@ export const updateItem = async (req, res) => {
   }
 };
 
-// ─── POST /api/audits/:id/close ───────────────────────────────────────────────
+// POST /api/audits/:id/close
 export const closeCycle = async (req, res) => {
   try {
     const cycle = await AuditCycle.findById(req.params.id).populate('scopeDepartment', 'name');

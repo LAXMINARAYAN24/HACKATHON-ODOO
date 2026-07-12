@@ -1,9 +1,5 @@
 /**
- * AuditPage.jsx — owned by Satyam (feat/audit-reports)
- *
- * This page is wrapped by DashboardLayout in App.jsx (Laxminarayan owns that).
- * Import path for api: ../services/api (Laxminarayan's shared service).
- * No Layout or Sidebar import here.
+ * Audit Page
  */
 import { useState, useEffect, useCallback } from 'react';
 import {
@@ -12,7 +8,7 @@ import {
 } from 'lucide-react';
 import api from '../services/api';
 
-// ── Helpers ────────────────────────────────────────────────────────────────────
+// Helpers
 const fmtDate = (d) =>
   d
     ? new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
@@ -35,7 +31,7 @@ function VerificationBadge({ v }) {
   );
 }
 
-// ── Create Cycle Modal ─────────────────────────────────────────────────────────
+// Create Cycle Modal
 function CreateCycleModal({ onClose, onCreated }) {
   const [form, setForm] = useState({ name: '', scopeDepartment: '', startDate: '', endDate: '' });
   const [depts, setDepts] = useState([]);
@@ -46,7 +42,6 @@ function CreateCycleModal({ onClose, onCreated }) {
     api.get('/departments')
       .then((r) => setDepts(r.data.data || r.data))
       .catch(() => {
-        // Fallback while department route is being merged
         setDepts([
           { _id: 'eng', name: 'Engineering' },
           { _id: 'fac', name: 'Facilities' },
@@ -119,7 +114,7 @@ function CreateCycleModal({ onClose, onCreated }) {
   );
 }
 
-// ── Discrepancy Report Panel ───────────────────────────────────────────────────
+// Discrepancy Report Panel
 function DiscrepancyReport({ report, onDismiss }) {
   if (!report) return null;
   const hasIssues = report.discrepancies?.length > 0;
@@ -161,7 +156,7 @@ function DiscrepancyReport({ report, onDismiss }) {
   );
 }
 
-// ── Assign Auditor Modal ───────────────────────────────────────────────────────
+// Assign Auditor Modal
 function AssignAuditorModal({ cycle, onClose, onAssigned }) {
   const [users, setUsers] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
@@ -231,7 +226,7 @@ function AssignAuditorModal({ cycle, onClose, onAssigned }) {
   );
 }
 
-// ── Checklist View ─────────────────────────────────────────────────────────────
+// Checklist View
 function ChecklistView({ cycle, onBack, onClosed }) {
   const [items,   setItems]   = useState([]);
   const [loading, setLoading] = useState(true);
@@ -399,7 +394,7 @@ function ChecklistView({ cycle, onBack, onClosed }) {
   );
 }
 
-// ── Main Audit Page ────────────────────────────────────────────────────────────
+// Main Audit Page
 export default function AuditPage() {
   const [cycles,     setCycles]     = useState([]);
   const [loading,    setLoading]    = useState(true);

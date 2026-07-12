@@ -1,12 +1,5 @@
 /**
- * auditSeed.js — Satyam's seed scope only (feat/audit-reports)
- *
- * Frozen seed responsibilities:
- *   Satyam: audit cycles, AuditAssignments, AuditItems, notifications, activity logs
- *
- * Run AFTER Laxminarayan (users/depts), Jeny (assets/allocations), and Mahek (bookings)
- * have already seeded — this script depends on those documents existing.
- *
+ * Audit and Notifications seed
  * Usage: node auditSeed.js
  */
 import dotenv from 'dotenv';
@@ -24,7 +17,7 @@ async function seed() {
   await mongoose.connect(process.env.MONGO_URI);
   console.log('✅ Connected to MongoDB');
 
-  // ── Wipe only Satyam's collections ─────────────────────────────────────────
+  // Wipe audit collections
   await Promise.all([
     AuditCycle.deleteMany({}),
     AuditAssignment.deleteMany({}),
@@ -32,9 +25,9 @@ async function seed() {
     Notification.deleteMany({}),
     ActivityLog.deleteMany({}),
   ]);
-  console.log('🗑️  Cleared Satyam scope collections');
+  console.log('🗑️  Cleared audit scope collections');
 
-  // ── Resolve cross-module models (registered by teammates' routes) ───────────
+  // Resolve cross-module models
   let User, Department, Asset;
   try {
     User       = mongoose.model('User');
@@ -44,12 +37,12 @@ async function seed() {
     console.error(
       '❌ Cross-module models (User/Department/Asset) not registered.\n' +
       '   Run this seed from the root seed.js that imports all models, or\n' +
-      '   ensure Laxminarayan and Jeny\'s seed scripts have run first.'
+      '   ensure user and asset seed scripts have run first.'
     );
     process.exit(1);
   }
 
-  // ── Resolve seed data from existing documents ───────────────────────────────
+  // Resolve seed data from existing documents
   const [admin, auditor, deptHead] = await Promise.all([
     User.findOne({ role: 'admin' }),
     User.findOne({ role: 'employee' }),
@@ -63,7 +56,7 @@ async function seed() {
     process.exit(1);
   }
 
-  // ── AuditCycle ──────────────────────────────────────────────────────────────
+  // AuditCycle
   const past   = (d) => new Date(Date.now() - d * 86400000);
   const future = (d) => new Date(Date.now() + d * 86400000);
 
@@ -77,7 +70,7 @@ async function seed() {
   });
   console.log(`✅ AuditCycle: "${cycle.name}"`);
 
-  // ── AuditAssignments ────────────────────────────────────────────────────────
+  // AuditAssignments
   const assignees = [auditor, deptHead].filter(Boolean);
   if (assignees.length > 0) {
     await AuditAssignment.insertMany(
@@ -87,7 +80,7 @@ async function seed() {
     console.log(`✅ AuditAssignments: ${assignees.length} auditors assigned`);
   }
 
-  // ── AuditItems ──────────────────────────────────────────────────────────────
+  // AuditItems
   if (engAssets.length > 0) {
     const verifications = ['verified', 'missing', 'damaged', 'unverified', 'unverified'];
     const notes = [
@@ -111,7 +104,7 @@ async function seed() {
     console.log(`✅ AuditItems: ${items.length} items seeded`);
   }
 
-  // ── Notifications ────────────────────────────────────────────────────────────
+  // Notifications
   // Enums updated to: allocation, transfer, booking, maintenance, audit, system
   const notifData = [
     { user: admin._id,   type: 'allocation',  message: 'Laptop AF-0079 assigned to Priya Shah',             isRead: false, createdAt: past(0) },
@@ -132,7 +125,7 @@ async function seed() {
   const notifs = await Notification.insertMany(notifData);
   console.log(`✅ Notifications: ${notifs.length} seeded`);
 
-  // ── Activity Logs ─────────────────────────────────────────────────────────
+  // Activity Logs
   const logData = [
     { user: admin._id,   action: 'created audit cycle', entity: 'AuditCycle', entityId: cycle._id, metadata: { cycleName: cycle.name }, createdAt: past(10) },
     { user: admin._id,   action: 'assigned auditors',   entity: 'AuditCycle', entityId: cycle._id, metadata: { count: assignees.length }, createdAt: past(9) },
@@ -148,7 +141,7 @@ async function seed() {
   const logs = await ActivityLog.insertMany(logData.filter((l) => l.entityId));
   console.log(`✅ ActivityLogs: ${logs.length} seeded`);
 
-  console.log('\n✅ Satyam seed complete.');
+  console.log('\n✅ Seed complete.');
   process.exit(0);
 }
 

@@ -1,14 +1,11 @@
 /**
- * NotificationsPage.jsx — owned by Satyam (feat/audit-reports)
- * Wrapped by DashboardLayout in App.jsx (Laxminarayan owns that).
- * Frozen API: GET /api/notifications, PATCH /api/notifications/:id/read, GET /api/activity-logs
- * No Layout/Sidebar import. Polls every 10s.
+ * Notifications Page
  */
 import { useState, useEffect, useCallback } from 'react';
 import { Bell, AlertTriangle, CheckCircle2, CalendarCheck, Info, CheckCheck, Clock, User } from 'lucide-react';
 import api from '../services/api';
 
-// ── Helpers ────────────────────────────────────────────────────────────────────
+// Helpers
 const timeAgo = (date) => {
   const s = Math.floor((Date.now() - new Date(date).getTime()) / 1000);
   if (s < 60)    return `${s}s ago`;
@@ -29,7 +26,7 @@ const TYPE_META = {
 const TABS = ['All', 'Audit', 'Maintenance', 'Bookings', 'Other'];
 const TAB_TYPE = { All: null, Audit: 'audit', Maintenance: 'maintenance', Bookings: 'booking', Other: 'system' };
 
-// ── Demo fallback data ─────────────────────────────────────────────────────────
+// Demo fallback data
 const DEMO_NOTIFS = [
   { _id: 'n1', type: 'allocation',  message: 'Laptop AF-0079 assigned to Priya Shah', isRead: false, createdAt: new Date(Date.now() - 120000) },
   { _id: 'n2', type: 'maintenance', message: 'Maintenance request AF-0056 approved',  isRead: false, createdAt: new Date(Date.now() - 600000) },
@@ -46,7 +43,7 @@ const DEMO_ACTIVITY = [
   { _id: 'a5', user: { name: 'Ravi Kumar',   role: 'asset_manager'  }, action: 'assigned auditors',   entity: 'AuditCycle', metadata: { count: 2 }, createdAt: new Date(Date.now() - 777600000) },
 ];
 
-// ── Notification row ──────────────────────────────────────────────────────────
+// Notification row
 function NotifRow({ notif, onMarkRead }) {
   const meta = TYPE_META[notif.type] || TYPE_META.info;
   return (
@@ -68,7 +65,7 @@ function NotifRow({ notif, onMarkRead }) {
   );
 }
 
-// ── Activity row ──────────────────────────────────────────────────────────────
+// Activity row
 function ActivityRow({ log }) {
   return (
     <div className="flex items-start gap-4 px-4 py-3 border-b border-white/5 hover:bg-white/[0.025] transition-colors">
@@ -94,7 +91,7 @@ function ActivityRow({ log }) {
   );
 }
 
-// ── Main ───────────────────────────────────────────────────────────────────────
+// Main
 export default function NotificationsPage() {
   const [notifs,      setNotifs]      = useState(DEMO_NOTIFS);
   const [activity,    setActivity]    = useState(DEMO_ACTIVITY);
@@ -115,7 +112,7 @@ export default function NotificationsPage() {
 
   const fetchActivity = useCallback(async () => {
     try {
-      const r = await api.get('/activity-logs');   // frozen API path
+      const r = await api.get('/activity-logs');
       if (r.data?.success && r.data.data?.length) setActivity(r.data.data);
     } catch { /* keep demo */ }
   }, []);

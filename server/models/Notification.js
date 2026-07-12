@@ -1,10 +1,7 @@
 import mongoose from 'mongoose';
 
 /**
- * Notification — owned by Satyam (feat/audit-reports)
- * Frozen schema: Contract v1.0
- * Also used by the shared createNotification() helper in utils/notify.js
- * that teammates (Jeny, Mahek) import and call from their controllers.
+ * Notification model
  */
 const NotificationSchema = new mongoose.Schema(
   {

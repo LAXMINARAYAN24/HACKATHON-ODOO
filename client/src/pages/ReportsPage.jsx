@@ -1,9 +1,4 @@
-/**
- * ReportsPage.jsx — owned by Satyam (feat/audit-reports)
- * Wrapped by DashboardLayout in App.jsx (Laxminarayan owns that).
- * Frozen API: /utilization, /maintenance-frequency, /due-soon
- * No Layout/Sidebar import.
- */
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { BarChart3, Download, AlertTriangle, TrendingUp, Clock, RefreshCw, CheckCircle2 } from 'lucide-react';
 import {
@@ -30,14 +25,14 @@ const ChartTooltip = ({ active, payload, label }) => {
 // ── Client-side CSV export ─────────────────────────────────────────────────────
 const exportCSV = (rows, filename) => {
   if (!rows?.length) return;
-  const keys   = Object.keys(rows[0]);
+  const keys = Object.keys(rows[0]);
   const header = keys.join(',');
-  const body   = rows.map((r) => keys.map((k) => JSON.stringify(r[k] ?? '')).join(',')).join('\n');
-  const blob   = new Blob([`${header}\n${body}`], { type: 'text/csv' });
-  const url    = URL.createObjectURL(blob);
-  const a      = document.createElement('a');
-  a.href       = url;
-  a.download   = `${filename}_${new Date().toISOString().slice(0, 10)}.csv`;
+  const body = rows.map((r) => keys.map((k) => JSON.stringify(r[k] ?? '')).join(',')).join('\n');
+  const blob = new Blob([`${header}\n${body}`], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${filename}_${new Date().toISOString().slice(0, 10)}.csv`;
   a.click();
   URL.revokeObjectURL(url);
 };
@@ -67,21 +62,21 @@ function Section({ title, icon: Icon, exportData, children }) {
 
 // ── Fallback demo data (shown if API not yet running) ─────────────────────────
 const DEMO_UTILIZATION = [
-  { department: 'Engineering',     allocatedCount: 18, bookingCount: 34 },
-  { department: 'Facilities',      allocatedCount: 7,  bookingCount: 21 },
-  { department: 'Field Ops',       allocatedCount: 11, bookingCount: 8  },
-  { department: 'Unassigned',      allocatedCount: 4,  bookingCount: 5  },
+  { department: 'Engineering', allocatedCount: 18, bookingCount: 34 },
+  { department: 'Facilities', allocatedCount: 7, bookingCount: 21 },
+  { department: 'Field Ops', allocatedCount: 11, bookingCount: 8 },
+  { department: 'Unassigned', allocatedCount: 4, bookingCount: 5 },
 ];
 const DEMO_MAINTENANCE = [
   { assetTag: 'AF-9935', assetName: 'AF-9935 Monitor', maintenanceCount: 5 },
-  { assetTag: 'AF-0112', assetName: 'Dell Laptop',     maintenanceCount: 4 },
-  { assetTag: 'AF-0063', assetName: 'Projector',       maintenanceCount: 3 },
-  { assetTag: 'AF-0114', assetName: 'Laptop Pro',      maintenanceCount: 2 },
+  { assetTag: 'AF-0112', assetName: 'Dell Laptop', maintenanceCount: 4 },
+  { assetTag: 'AF-0063', assetName: 'Projector', maintenanceCount: 3 },
+  { assetTag: 'AF-0114', assetName: 'Laptop Pro', maintenanceCount: 2 },
 ];
 const DEMO_DUE_SOON = {
   nearRetirement: [
     { tag: 'AF-0041', name: 'FumiPack-AF-0041', acquisitionDate: '2021-03-01', status: 'Available' },
-    { tag: 'AF-0033', name: 'Laptop AF-0033',   acquisitionDate: '2019-08-15', status: 'Allocated' },
+    { tag: 'AF-0033', name: 'Laptop AF-0033', acquisitionDate: '2019-08-15', status: 'Allocated' },
   ],
   overdueAllocations: [
     { asset: { tag: 'AF-0021', name: 'Office chair' }, employee: { name: 'Arjun Das' }, expectedReturnDate: new Date(Date.now() - 30 * 86400000) },
@@ -96,15 +91,15 @@ const DEMO_HEATMAP = [
 ];
 
 const daysSince = (d) => d ? Math.floor((Date.now() - new Date(d).getTime()) / 86400000) : 0;
-const fmtDate   = (d) => d ? new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '—';
+const fmtDate = (d) => d ? new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '—';
 
 // ── Main ───────────────────────────────────────────────────────────────────────
 export default function ReportsPage() {
   const [utilization, setUtilization] = useState(DEMO_UTILIZATION);
   const [maintenance, setMaintenance] = useState(DEMO_MAINTENANCE);
-  const [dueSoon,     setDueSoon]     = useState(DEMO_DUE_SOON);
-  const [heatmap,     setHeatmap]     = useState(DEMO_HEATMAP);
-  const [loading,     setLoading]     = useState(true);
+  const [dueSoon, setDueSoon] = useState(DEMO_DUE_SOON);
+  const [heatmap, setHeatmap] = useState(DEMO_HEATMAP);
+  const [loading, setLoading] = useState(true);
   const [lastRefresh, setLastRefresh] = useState(new Date());
 
   const fetchAll = useCallback(async () => {
@@ -115,10 +110,10 @@ export default function ReportsPage() {
         api.get('/reports/due-soon'),
         api.get('/reports/heatmap'),
       ]);
-      if (u.data?.success && u.data.data?.length)  setUtilization(u.data.data);
-      if (m.data?.success && m.data.data?.length)  setMaintenance(m.data.data);
-      if (d.data?.success && d.data.data)          setDueSoon(d.data.data);
-      if (h.data?.success && h.data.data)          setHeatmap(h.data.data);
+      if (u.data?.success && u.data.data?.length) setUtilization(u.data.data);
+      if (m.data?.success && m.data.data?.length) setMaintenance(m.data.data);
+      if (d.data?.success && d.data.data) setDueSoon(d.data.data);
+      if (h.data?.success && h.data.data) setHeatmap(h.data.data);
       setLastRefresh(new Date());
     } catch {
       // Keep demo data if API is not yet running
@@ -156,7 +151,7 @@ export default function ReportsPage() {
               <Tooltip content={<ChartTooltip />} />
               <Legend wrapperStyle={{ fontSize: 11, color: '#ffffff60' }} />
               <Bar dataKey="allocatedCount" name="Allocated" fill="#2dd4bf" radius={[3, 3, 0, 0]} />
-              <Bar dataKey="bookingCount"   name="Bookings"  fill="#14b8a6" radius={[3, 3, 0, 0]} />
+              <Bar dataKey="bookingCount" name="Bookings" fill="#14b8a6" radius={[3, 3, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </Section>

@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
 
 /**
- * AuditItem — owned by Satyam (feat/audit-reports)
- * Frozen schema: Contract v1.0
+ * AuditItem model
  */
 const AuditItemSchema = new mongoose.Schema(
   {
@@ -14,7 +13,7 @@ const AuditItemSchema = new mongoose.Schema(
       default: 'unverified',
     },
     notes:        { type: String, default: '' },
-    // Not in frozen schema but needed for checklist UX — only safe additions
+    // Needed for checklist UX
     checkedAt:    { type: Date },
     checkedBy:    { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   },

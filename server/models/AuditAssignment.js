@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
 
 /**
- * AuditAssignment — owned by Satyam (feat/audit-reports)
- * Frozen schema: Contract v1.0
+ * AuditAssignment model
  */
 const AuditAssignmentSchema = new mongoose.Schema(
   {

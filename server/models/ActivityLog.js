@@ -1,9 +1,7 @@
 import mongoose from 'mongoose';
 
 /**
- * ActivityLog — owned by Satyam (feat/audit-reports)
- * Frozen schema: Contract v1.0
- * Field name frozen: `metadata` (not `meta`)
+ * ActivityLog model
  */
 const ActivityLogSchema = new mongoose.Schema(
   {

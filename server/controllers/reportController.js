@@ -1,19 +1,15 @@
 /**
- * reportController.js — owned by Satyam (feat/audit-reports)
- *
- * Read-only aggregation over cross-module models. Models are resolved at
- * runtime via mongoose.model() — no duplicate schemas.
- * Frozen API list: utilization, maintenance-frequency, due-soon.
+ * Report controller
  */
 import mongoose from 'mongoose';
 
-// Runtime resolution — registered by Jeny's and Mahek's route files at startup
+// Runtime resolution
 const Allocation         = () => mongoose.model('Allocation');
 const Booking            = () => mongoose.model('Booking');
 const MaintenanceRequest = () => mongoose.model('MaintenanceRequest');
 const Asset              = () => mongoose.model('Asset');
 
-// ─── GET /api/reports/utilization ─────────────────────────────────────────────
+// GET /api/reports/utilization
 // Active allocations + bookings grouped by department
 export const getUtilization = async (req, res) => {
   try {
@@ -75,7 +71,7 @@ export const getUtilization = async (req, res) => {
   }
 };
 
-// ─── GET /api/reports/maintenance-frequency ───────────────────────────────────
+// GET /api/reports/maintenance-frequency
 // Maintenance request count per asset, sorted highest first
 export const getMaintenanceFrequency = async (req, res) => {
   try {
@@ -112,7 +108,7 @@ export const getMaintenanceFrequency = async (req, res) => {
   }
 };
 
-// ─── GET /api/reports/due-soon ────────────────────────────────────────────────
+// GET /api/reports/due-soon
 // Assets nearing retirement (4+ years) + overdue active allocations
 export const getDueSoon = async (req, res) => {
   try {
@@ -144,7 +140,7 @@ export const getDueSoon = async (req, res) => {
   }
 };
 
-// ─── GET /api/reports/heatmap ─────────────────────────────────────────────────
+// GET /api/reports/heatmap
 // Booking heatmap aggregating by day of week and hour
 export const getHeatmap = async (req, res) => {
   try {

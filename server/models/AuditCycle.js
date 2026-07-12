@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
 
 /**
- * AuditCycle — owned by Satyam (feat/audit-reports)
- * Frozen schema: Contract v1.0
+ * AuditCycle model
  */
 const AuditCycleSchema = new mongoose.Schema(
   {

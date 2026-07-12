@@ -1,11 +1,5 @@
 /**
- * routes/audits.js — owned by Satyam (feat/audit-reports)
- *
- * Mount path (send to Laxminarayan for server.js):
- *   app.use('/api/audits', require('./routes/audits'));
- *
- * Auth and role middleware are injected by Laxminarayan's server.js.
- * We import them by agreed path; they will exist after integration.
+ * Audits routes
  */
 import express from 'express';
 import auth from '../middleware/auth.js';
