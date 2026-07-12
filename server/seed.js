@@ -11,21 +11,20 @@ const seed = async () => {
   await connectDB();
 
   console.log("🌱 Seeding Laxminarayan-owned data...");
-
-  // Clear existing data (only owned models)
+ 
   await User.deleteMany({});
   await Department.deleteMany({});
   await Category.deleteMany({});
 
-  // ── Departments 
+ 
   const [itDept, hrDept, opsDept] = await Department.insertMany([
     { name: "Information Technology", status: "active" },
     { name: "Human Resources", status: "active" },
     { name: "Operations", status: "active" },
   ]);
-  console.log("✅ Departments seeded");
+  console.log("Departments seeded");
 
-  // ── Users 
+  
   const adminHash = await bcrypt.hash("Admin@1234", 12);
   const empHash = await bcrypt.hash("Employee@1234", 12);
 
@@ -64,15 +63,15 @@ const seed = async () => {
       status: "active",
     },
   ]);
-  console.log("✅ Users seeded");
+  console.log("Users seeded");
 
   // Set department heads after users exist
   await Department.findByIdAndUpdate(itDept._id, { head: admin._id });
   await Department.findByIdAndUpdate(hrDept._id, { head: emp2._id });
   await Department.findByIdAndUpdate(opsDept._id, { head: emp3._id });
-  console.log("✅ Department heads linked");
+  console.log("Department heads linked");
 
-  // ── Categories 
+  //Categories 
   await Category.insertMany([
     {
       name: "Laptop",
@@ -95,7 +94,7 @@ const seed = async () => {
       customFields: { type: "", brand: "", ports: "" },
     },
   ]);
-  console.log("✅ Categories seeded");
+  console.log("Categories seeded");
 
   console.log("\n🎉 Seed complete!");
   console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
