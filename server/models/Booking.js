@@ -46,22 +46,19 @@ const bookingSchema = new mongoose.Schema(
   }
 );
 
-// ------------------------------------------------------------------
-// Indexes
-// ------------------------------------------------------------------
 
-// Compound index to accelerate overlap queries on the same resource
+
+
 bookingSchema.index({ resource: 1, startTime: 1, endTime: 1 });
 
-// Frequently filtered by status
+
 bookingSchema.index({ status: 1 });
 
-// Frequently filtered by employee
+
 bookingSchema.index({ employee: 1 });
 
-// ------------------------------------------------------------------
-// Pre-validate hook — ensure endTime > startTime
-// ------------------------------------------------------------------
+
+
 bookingSchema.pre('validate', function (next) {
   if (this.startTime && this.endTime && this.endTime <= this.startTime) {
     this.invalidate('endTime', 'End time must be after start time');
