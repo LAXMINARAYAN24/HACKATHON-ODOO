@@ -66,7 +66,7 @@ const Login = () => {
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" id="login-form">
 
-            {/* ── Email ───────────────────────────────────────────────── */}
+            {/* ── Email  */}
             <div>
               <label htmlFor="login-email" className="label">
                 Email address
@@ -94,7 +94,7 @@ const Login = () => {
               )}
             </div>
 
-            {/* ── Password ─────────────────────────────────────────────── */}
+            {/* ── Password */}
             <div>
               <label htmlFor="login-password" className="label">
                 Password
@@ -133,7 +133,7 @@ const Login = () => {
               )}
             </div>
 
-            {/* ── Submit ───────────────────────────────────────────────── */}
+            {/* ── Submit  */}
             <button
               id="login-submit-btn"
               type="submit"

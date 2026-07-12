@@ -12,8 +12,7 @@ import {
 } from "lucide-react";
 import api from "../services/api.js";
 
-// ── Reusable sub-components ──────────────────────────────────────────────
-
+// ── Reusable sub-components 
 const SectionHeader = ({ title, subtitle, onAdd }) => (
   <div className="flex items-center justify-between mb-5">
     <div>
@@ -47,7 +46,7 @@ const ErrorBanner = ({ message }) =>
     </div>
   ) : null;
 
-// ── TAB: Departments ─────────────────────────────────────────────────────
+// ── TAB: Departments 
 
 const DepartmentsTab = ({ users }) => {
   const [departments, setDepartments] = useState([]);
@@ -251,7 +250,7 @@ const DepartmentsTab = ({ users }) => {
   );
 };
 
-// ── TAB: Categories ──────────────────────────────────────────────────────
+// ── TAB: Categories 
 
 const CategoriesTab = () => {
   const [categories, setCategories] = useState([]);
@@ -391,7 +390,7 @@ const CategoriesTab = () => {
   );
 };
 
-// ── TAB: Users ───────────────────────────────────────────────────────────
+// ── TAB: Users 
 
 const ROLES = ["employee", "dept_head", "asset_manager", "admin"];
 
@@ -495,8 +494,7 @@ const UsersTab = ({ users, onRefresh }) => {
   );
 };
 
-// ── Main page ────────────────────────────────────────────────────────────
-
+// ── Main page 
 const TABS = [
   { key: "departments", label: "Departments", icon: Building2 },
   { key: "categories", label: "Categories", icon: Tags },

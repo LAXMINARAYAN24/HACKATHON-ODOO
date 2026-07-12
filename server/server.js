@@ -29,7 +29,7 @@ import userRoutes from "./routes/users.js";
 
 const app = express();
 
-// ── Middleware ─────────────────────────────────────────────────────────────
+// ── Middleware 
 app.use(
   cors({
     origin: process.env.CLIENT_URL || "http://localhost:5173",
@@ -39,19 +39,19 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ── Health check ───────────────────────────────────────────────────────────
+// ── Health check 
 app.get("/api/health", (req, res) => {
   res.status(200).json({ success: true, message: "AssetFlow API is running." });
 });
 
-// ── Laxminarayan-owned routes ──────────────────────────────────────────────
+// ── Laxminarayan-owned routes 
 app.use("/api/auth", authRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/departments", departmentRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/users", userRoutes);
 
-// ── Teammate routes (activate after merge) ─────────────────────────────────
+// ── Teammate routes (activate after merge) 
 //
 // JENY:
 // app.use("/api/assets", assetRoutes);
@@ -68,18 +68,18 @@ app.use("/api/users", userRoutes);
 // app.use("/api/notifications", notificationRoutes);
 // app.use("/api/activity-logs", activityLogRoutes);
 
-// ── 404 handler ────────────────────────────────────────────────────────────
+// ── 404 handler 
 app.use("*", (req, res) => {
   res.status(404).json({ success: false, message: "Route not found." });
 });
 
-// ── Global error handler ───────────────────────────────────────────────────
+// ── Global error handler 
 app.use((err, req, res, next) => {
   console.error("Unhandled error:", err);
   res.status(500).json({ success: false, message: "Internal server error." });
 });
 
-// ── Start server ───────────────────────────────────────────────────────────
+// ── Start server 
 const PORT = process.env.PORT || 5000;
 
 connectDB().then(() => {

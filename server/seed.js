@@ -1,12 +1,4 @@
-/**
- * Seed script — Laxminarayan ownership only
- * Seeds: Admin, employees, departments, categories
- *
- * Does NOT seed: Assets, Allocations, Bookings, Maintenance, Audits
- * (those are teammate-owned data per §16)
- *
- * Run: npm run seed (from /server directory)
- */
+
 import "dotenv/config";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
@@ -25,7 +17,7 @@ const seed = async () => {
   await Department.deleteMany({});
   await Category.deleteMany({});
 
-  // ── Departments ─────────────────────────────────────────────────────
+  // ── Departments 
   const [itDept, hrDept, opsDept] = await Department.insertMany([
     { name: "Information Technology", status: "active" },
     { name: "Human Resources", status: "active" },
@@ -33,7 +25,7 @@ const seed = async () => {
   ]);
   console.log("✅ Departments seeded");
 
-  // ── Users ───────────────────────────────────────────────────────────
+  // ── Users 
   const adminHash = await bcrypt.hash("Admin@1234", 12);
   const empHash = await bcrypt.hash("Employee@1234", 12);
 
@@ -80,7 +72,7 @@ const seed = async () => {
   await Department.findByIdAndUpdate(opsDept._id, { head: emp3._id });
   console.log("✅ Department heads linked");
 
-  // ── Categories ──────────────────────────────────────────────────────
+  // ── Categories 
   await Category.insertMany([
     {
       name: "Laptop",

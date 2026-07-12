@@ -2,13 +2,13 @@ import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import useAuthStore from "./store/authStore.js";
 
-// ── Laxminarayan-owned pages ─────────────────────────────────────────────
+// ── Laxminarayan-owned pages 
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import OrganizationSetup from "./pages/OrganizationSetup.jsx";
 
-// ── Shared layout & guards ───────────────────────────────────────────────
+// ── Shared layout & guards
 import DashboardLayout from "./layouts/DashboardLayout.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
@@ -57,7 +57,7 @@ const App = () => {
         {/* Protected routes — authenticated users */}
         <Route element={<ProtectedRoute />}>
           <Route element={<DashboardLayout />}>
-            {/* ── Laxminarayan ────────────────────────────────────── */}
+            {/* laxminarayans's  */}
             <Route path="/dashboard" element={<Dashboard />} />
 
             {/* ── Admin-only: Organization Setup (correction 5) ──── */}

@@ -76,7 +76,7 @@ const Signup = () => {
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" id="signup-form">
 
-            {/* ── Full Name ───────────────────────────────────────────── */}
+            {/* ── Full Name  */}
             <div>
               <label htmlFor="signup-name" className="label">
                 Full name
@@ -111,7 +111,7 @@ const Signup = () => {
               )}
             </div>
 
-            {/* ── Email ───────────────────────────────────────────────── */}
+            {/* ── Email */}
             <div>
               <label htmlFor="signup-email" className="label">
                 Email address
@@ -140,7 +140,7 @@ const Signup = () => {
               )}
             </div>
 
-            {/* ── Password ─────────────────────────────────────────────── */}
+            {/* ── Password  */}
             <div>
               <label htmlFor="signup-password" className="label">
                 Password
@@ -190,7 +190,7 @@ const Signup = () => {
               )}
             </div>
 
-            {/* ── Submit ───────────────────────────────────────────────── */}
+            {/* ── Submit */}
             <button
               id="signup-submit-btn"
               type="submit"
