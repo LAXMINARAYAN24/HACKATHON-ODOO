@@ -54,8 +54,8 @@ AssetFlow is a collaborative hackathon project built for the **Odoo Hackathon**.
 |---|---|---|
 | **Laxminarayan** (Member A) | Team Lead / Integration Lead | Auth, Dashboard, Organization Setup, Categories, Departments, Users, CI/Integration |
 | **Jeny Bhatt** | Asset Management | Assets, Allocations, Transfer Requests |
-| **Mahek** | Booking & Maintenance | Resource Bookings, Maintenance Requests |
-| **Satyam Verma** | Audit & Reports | Audit Cycles, Reports, Notifications, Activity Logs |
+| **Mahek Kureshi** | Booking & Maintenance | Resource Bookings, Maintenance Requests |
+| **Satyam Krishna** | Audit & Reports | Audit Cycles, Reports, Notifications, Activity Logs |
 
 ### Branch Strategy
 ```
