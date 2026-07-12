@@ -12,6 +12,15 @@ import OrganizationSetup from "./pages/OrganizationSetup.jsx";
 import BookingPage from "./pages/BookingPage.jsx";
 import MaintenancePage from "./pages/MaintenancePage.jsx";
 
+// ── Jeny-owned pages (integrated)
+import AssetsPage from "./pages/AssetsPage.jsx";
+import AddAssetPage from "./pages/AddAssetPage.jsx";
+import EditAssetPage from "./pages/EditAssetPage.jsx";
+import AllocationsPage from "./pages/AllocationsPage.jsx";
+import AllocateAssetPage from "./pages/AllocateAssetPage.jsx";
+import TransfersPage from "./pages/TransfersPage.jsx";
+import RequestTransferPage from "./pages/RequestTransferPage.jsx";
+
 // ── Satyam-owned pages (integrated)
 import AuditPage from "./pages/AuditPage.jsx";
 import ReportsPage from "./pages/ReportsPage.jsx";
@@ -74,10 +83,14 @@ const App = () => {
               <Route path="/organization" element={<OrganizationSetup />} />
             </Route>
 
-            {/* ── JENY placeholder (replace after feat/assets-allocation merges) ── */}
-            <Route path="/assets" element={<ComingSoon module="Asset Registry" owner="Jeny Bhatt" />} />
-            <Route path="/allocations" element={<ComingSoon module="Allocation & Transfer" owner="Jeny Bhatt" />} />
-            <Route path="/transfers" element={<ComingSoon module="Transfer Requests" owner="Jeny Bhatt" />} />
+            {/* ── JENY pages (integrated) ── */}
+            <Route path="/assets" element={<AssetsPage />} />
+            <Route path="/assets/new" element={<AddAssetPage />} />
+            <Route path="/assets/edit/:id" element={<EditAssetPage />} />
+            <Route path="/allocations" element={<AllocationsPage />} />
+            <Route path="/allocations/new" element={<AllocateAssetPage />} />
+            <Route path="/transfers" element={<TransfersPage />} />
+            <Route path="/transfers/new" element={<RequestTransferPage />} />
 
             {/* ── MAHEK pages (integrated) ── */}
             <Route path="/bookings" element={<BookingPage />} />
