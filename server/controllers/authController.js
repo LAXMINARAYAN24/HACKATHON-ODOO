@@ -8,6 +8,7 @@ const generateToken = (userId) => {
   });
 };
 
+
 // POST /api/auth/signup
 export const signup = async (req, res) => {
   try {

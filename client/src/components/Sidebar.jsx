@@ -2,7 +2,6 @@ import { NavLink, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Building2,
-  Package,
   ArrowLeftRight,
   CalendarDays,
   Wrench,
@@ -11,6 +10,7 @@ import {
   Bell,
   LogOut,
   ChevronRight,
+  Package,
 } from "lucide-react";
 import useAuthStore from "../store/authStore.js";
 
@@ -79,13 +79,16 @@ const Sidebar = () => {
   return (
     <aside className="flex h-screen w-60 flex-col border-r border-border bg-surface-100 flex-shrink-0">
       {/* Logo */}
-      <div className="flex items-center gap-2.5 px-5 py-5 border-b border-border">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-500">
-          <Package size={16} className="text-white" />
+      <div className="flex items-center gap-3 px-4 py-4 border-b border-border">
+        <img src="/logo.png" alt="AssetFlow" className="h-9 w-auto flex-shrink-0" />
+        <div className="flex flex-col min-w-0">
+          <span className="text-sm font-bold text-white tracking-tight leading-none">
+            Asset<span className="text-primary-400">Flow</span>
+          </span>
+          <span className="text-[10px] text-slate-500 truncate leading-none mt-0.5">
+            Enterprise Asset Mgmt
+          </span>
         </div>
-        <span className="text-base font-bold text-white tracking-tight">
-          AssetFlow
-        </span>
       </div>
 
       {/* Nav */}

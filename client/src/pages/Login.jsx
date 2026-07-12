@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Eye, EyeOff, Package, AlertCircle } from "lucide-react";
+import { Eye, EyeOff, AlertCircle } from "lucide-react";
 import api from "../services/api.js";
 import useAuthStore from "../store/authStore.js";
 
@@ -42,21 +42,19 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark flex items-center justify-center p-4">
+    <div className="auth-wrapper">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-500 mb-4 shadow-lg shadow-primary-500/20">
-            <Package size={24} className="text-white" />
-          </div>
-          <h1 className="text-2xl font-bold text-white">Welcome back</h1>
-          <p className="text-slate-400 text-sm mt-1">
-            Sign in to your AssetFlow account
+          <img src="/logo.png" alt="AssetFlow" className="h-20 w-auto mb-4 drop-shadow-xl" />
+          <h1 className="text-2xl font-bold text-white tracking-tight">Welcome back</h1>
+          <p className="text-slate-400 text-sm mt-1.5">
+            Enterprise Asset &amp; Resource Management
           </p>
         </div>
 
         {/* Card */}
-        <div className="card">
+        <div className="auth-card">
           {serverError && (
             <div className="flex items-center gap-2.5 bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-3 mb-5">
               <AlertCircle size={16} className="text-red-400 flex-shrink-0" />
@@ -154,11 +152,11 @@ const Login = () => {
 
         {/* Sign up link */}
         <p className="text-center text-sm text-slate-500 mt-6">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link
             to="/signup"
             id="login-signup-link"
-            className="text-primary-400 hover:text-primary-300 font-medium transition-colors"
+            className="text-primary-400 hover:text-primary-300 font-semibold transition-colors"
           >
             Create account
           </Link>
