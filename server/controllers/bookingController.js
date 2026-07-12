@@ -1,5 +1,6 @@
-const Booking = require('../models/Booking');
-const Asset = require('../models/Asset');
+import Booking from '../models/Booking.js';
+import Asset from '../models/Asset.js';
+
 
 
 // POST /api/bookings
@@ -257,7 +258,7 @@ const updateBookingStatus = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   createBooking,
   getAllBookings,
   getBookingById,
