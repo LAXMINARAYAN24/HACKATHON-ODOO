@@ -10,6 +10,7 @@ const assetSchema = new Schema(
       required: [true, 'Asset Tag is required'],
       unique: true,
       trim: true,
+      uppercase: true,
     },
 
     // Descriptive name of the asset
@@ -95,6 +96,7 @@ const assetSchema = new Schema(
     photoUrl: {
       type: String,
       trim: true,
+      default: '',
     },
   },
   {
@@ -102,7 +104,9 @@ const assetSchema = new Schema(
   }
 );
 
+// Standard Mongoose compound index
 assetSchema.index({ department: 1, status: 1 }, { name: 'dept_status_idx' });
 
+// Default export
 const Asset = mongoose.model('Asset', assetSchema);
 export default Asset;
