@@ -16,13 +16,19 @@ const Signup = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({ mode: "onTouched" });
 
   const onSubmit = async (data) => {
     setServerError("");
     setIsLoading(true);
     try {
-      const res = await api.post("/auth/signup", data);
+      // Trim whitespace before sending to server
+      const payload = {
+        name: data.name.trim(),
+        email: data.email.trim().toLowerCase(),
+        password: data.password,
+      };
+      const res = await api.post("/auth/signup", payload);
       if (res.data.success) {
         login(res.data.data.user, res.data.data.token);
         navigate("/dashboard");
@@ -69,7 +75,8 @@ const Signup = () => {
           )}
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" id="signup-form">
-            {/* Name */}
+
+            {/* ── Full Name ───────────────────────────────────────────── */}
             <div>
               <label htmlFor="signup-name" className="label">
                 Full name
@@ -86,6 +93,17 @@ const Signup = () => {
                     value: 2,
                     message: "Name must be at least 2 characters",
                   },
+                  maxLength: {
+                    value: 50,
+                    message: "Name must be 50 characters or fewer",
+                  },
+                  pattern: {
+                    // Letters (including accented), spaces, hyphens, apostrophes only
+                    value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s'\-]+$/,
+                    message: "Name can only contain letters, spaces, hyphens, and apostrophes",
+                  },
+                  validate: (value) =>
+                    value.trim().length >= 2 || "Name must be at least 2 characters",
                 })}
               />
               {errors.name && (
@@ -93,7 +111,7 @@ const Signup = () => {
               )}
             </div>
 
-            {/* Email */}
+            {/* ── Email ───────────────────────────────────────────────── */}
             <div>
               <label htmlFor="signup-email" className="label">
                 Email address
@@ -106,9 +124,14 @@ const Signup = () => {
                 className={`input ${errors.email ? "input-error" : ""}`}
                 {...register("email", {
                   required: "Email is required",
+                  maxLength: {
+                    value: 100,
+                    message: "Email must be 100 characters or fewer",
+                  },
                   pattern: {
-                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                    message: "Enter a valid email address",
+                    // Stricter RFC-compliant email pattern
+                    value: /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/,
+                    message: "Enter a valid email address (e.g. name@company.com)",
                   },
                 })}
               />
@@ -117,7 +140,7 @@ const Signup = () => {
               )}
             </div>
 
-            {/* Password */}
+            {/* ── Password ─────────────────────────────────────────────── */}
             <div>
               <label htmlFor="signup-password" className="label">
                 Password
@@ -135,6 +158,17 @@ const Signup = () => {
                       value: 8,
                       message: "Password must be at least 8 characters",
                     },
+                    maxLength: {
+                      value: 128,
+                      message: "Password must be 128 characters or fewer",
+                    },
+                    validate: (value) => {
+                      if (!/[A-Za-z]/.test(value))
+                        return "Password must contain at least one letter";
+                      if (!/[0-9]/.test(value))
+                        return "Password must contain at least one number";
+                      return true;
+                    },
                   })}
                 />
                 <button
@@ -147,12 +181,16 @@ const Signup = () => {
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
-              {errors.password && (
+              {errors.password ? (
                 <p className="error-text">{errors.password.message}</p>
+              ) : (
+                <p className="text-xs text-slate-500 mt-1">
+                  At least 8 characters with a letter and a number
+                </p>
               )}
             </div>
 
-            {/* Submit */}
+            {/* ── Submit ───────────────────────────────────────────────── */}
             <button
               id="signup-submit-btn"
               type="submit"

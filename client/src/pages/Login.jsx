@@ -16,13 +16,18 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({ mode: "onTouched" });
 
   const onSubmit = async (data) => {
     setServerError("");
     setIsLoading(true);
     try {
-      const res = await api.post("/auth/login", data);
+      // Trim whitespace before sending
+      const payload = {
+        email: data.email.trim().toLowerCase(),
+        password: data.password,
+      };
+      const res = await api.post("/auth/login", payload);
       if (res.data.success) {
         login(res.data.data.user, res.data.data.token);
         navigate("/dashboard");
@@ -60,7 +65,8 @@ const Login = () => {
           )}
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" id="login-form">
-            {/* Email */}
+
+            {/* ── Email ───────────────────────────────────────────────── */}
             <div>
               <label htmlFor="login-email" className="label">
                 Email address
@@ -73,9 +79,13 @@ const Login = () => {
                 className={`input ${errors.email ? "input-error" : ""}`}
                 {...register("email", {
                   required: "Email is required",
+                  maxLength: {
+                    value: 100,
+                    message: "Email must be 100 characters or fewer",
+                  },
                   pattern: {
-                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                    message: "Enter a valid email address",
+                    value: /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/,
+                    message: "Enter a valid email address (e.g. name@company.com)",
                   },
                 })}
               />
@@ -84,7 +94,7 @@ const Login = () => {
               )}
             </div>
 
-            {/* Password */}
+            {/* ── Password ─────────────────────────────────────────────── */}
             <div>
               <label htmlFor="login-password" className="label">
                 Password
@@ -98,6 +108,14 @@ const Login = () => {
                   className={`input pr-10 ${errors.password ? "input-error" : ""}`}
                   {...register("password", {
                     required: "Password is required",
+                    minLength: {
+                      value: 8,
+                      message: "Password must be at least 8 characters",
+                    },
+                    maxLength: {
+                      value: 128,
+                      message: "Password is too long",
+                    },
                   })}
                 />
                 <button
@@ -115,7 +133,7 @@ const Login = () => {
               )}
             </div>
 
-            {/* Submit */}
+            {/* ── Submit ───────────────────────────────────────────────── */}
             <button
               id="login-submit-btn"
               type="submit"
