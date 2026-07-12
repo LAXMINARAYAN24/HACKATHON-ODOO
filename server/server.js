@@ -81,11 +81,6 @@ app.use((err, req, res, next) => {
 
 // ── Start server 
 const PORT = process.env.PORT || 5000;
-console.log("=== Environment Check ===");
-console.log("JWT_SECRET exists:", !!process.env.JWT_SECRET);
-console.log("CLIENT_URL:", process.env.CLIENT_URL);
-console.log("NODE_ENV:", process.env.NODE_ENV);
-console.log("=========================");
 
 connectDB().then(() => {
   app.listen(PORT, () => {
