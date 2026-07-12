@@ -2,7 +2,15 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
+// const generateToken = (userId) => {
+//   return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
+//     expiresIn: "7d",
+//   });
+// };
 const generateToken = (userId) => {
+  console.log("JWT_SECRET exists:", !!process.env.JWT_SECRET);
+  console.log("JWT_SECRET length:", process.env.JWT_SECRET?.length);
+
   return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
     expiresIn: "7d",
   });
