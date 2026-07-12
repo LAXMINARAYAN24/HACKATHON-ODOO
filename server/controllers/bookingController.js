@@ -1,16 +1,15 @@
 const Booking = require('../models/Booking');
 const Asset = require('../models/Asset');
 
-// ------------------------------------------------------------------
+
 // POST /api/bookings
-// Create a new booking with overlap & bookable validation
-// ------------------------------------------------------------------
+
 const createBooking = async (req, res) => {
   try {
     const { resourceId, employeeId, title, description, startTime, endTime } =
       req.body;
 
-    // --- Map incoming field names to schema field names ---
+   
     const resource = resourceId;
     const employee = employeeId || req.user?.id;
 
@@ -31,7 +30,7 @@ const createBooking = async (req, res) => {
       });
     }
 
-    // --- Check that the asset exists and is bookable ---
+
     const asset = await Asset.findById(resource);
 
     if (!asset) {
@@ -48,9 +47,7 @@ const createBooking = async (req, res) => {
       });
     }
 
-    // --- Overlap check (frozen contract logic) ---
-    // Reject if: existing.startTime < newEnd AND existing.endTime > newStart
-    // Ignore cancelled bookings.
+
     const overlap = await Booking.findOne({
       resource,
       status: { $ne: 'cancelled' },
@@ -65,7 +62,7 @@ const createBooking = async (req, res) => {
       });
     }
 
-    // --- Create the booking ---
+  
     const booking = await Booking.create({
       resource,
       employee,
@@ -102,10 +99,7 @@ const createBooking = async (req, res) => {
   }
 };
 
-// ------------------------------------------------------------------
-// GET /api/bookings
-// List bookings with optional filters
-// ------------------------------------------------------------------
+
 const getAllBookings = async (req, res) => {
   try {
     const { status, resource, employee, startDate, endDate } = req.query;
@@ -116,7 +110,7 @@ const getAllBookings = async (req, res) => {
     if (resource) filter.resource = resource;
     if (employee) filter.employee = employee;
 
-    // Date range filter — bookings overlapping the given range
+    
     if (startDate || endDate) {
       if (startDate) filter.endTime = { $gte: new Date(startDate) };
       if (endDate) {
@@ -146,10 +140,7 @@ const getAllBookings = async (req, res) => {
   }
 };
 
-// ------------------------------------------------------------------
-// GET /api/bookings/:id
-// Get a single booking by ID
-// ------------------------------------------------------------------
+
 const getBookingById = async (req, res) => {
   try {
     const booking = await Booking.findById(req.params.id)
@@ -177,10 +168,7 @@ const getBookingById = async (req, res) => {
   }
 };
 
-// ------------------------------------------------------------------
-// PATCH /api/bookings/:id/cancel
-// Cancel a booking (only if currently 'upcoming')
-// ------------------------------------------------------------------
+
 const cancelBooking = async (req, res) => {
   try {
     const booking = await Booking.findById(req.params.id);
@@ -220,10 +208,7 @@ const cancelBooking = async (req, res) => {
   }
 };
 
-// ------------------------------------------------------------------
-// PATCH /api/bookings/:id/status
-// Update booking status (upcoming → ongoing → completed)
-// ------------------------------------------------------------------
+
 const updateBookingStatus = async (req, res) => {
   try {
     const { status } = req.body;

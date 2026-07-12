@@ -68,24 +68,23 @@ const maintenanceRequestSchema = new mongoose.Schema(
   }
 );
 
-// ------------------------------------------------------------------
-// Indexes
-// ------------------------------------------------------------------
 
-// Frequently filtered by status (Kanban columns)
+
+
+
+
 maintenanceRequestSchema.index({ status: 1 });
 
-// Frequently filtered by asset
+
 maintenanceRequestSchema.index({ asset: 1 });
 
-// Frequently filtered by priority
+
 maintenanceRequestSchema.index({ priority: 1 });
 
-// Lookup requests raised by a specific user
+
 maintenanceRequestSchema.index({ raisedBy: 1 });
 
-// Person D derives resolutionTime from resolvedAt - createdAt
-// createdAt is auto-indexed by timestamps, resolvedAt indexed here
+
 maintenanceRequestSchema.index({ resolvedAt: 1 });
 
 module.exports = mongoose.model('MaintenanceRequest', maintenanceRequestSchema);

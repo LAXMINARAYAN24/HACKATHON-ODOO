@@ -2,9 +2,7 @@
 // GET /api/dashboard/summary
 export const getSummary = async (req, res) => {
   try {
-    // ── Phase 1: Static zeros ──────────────────────────────────────────
-    // These will be replaced with real queries after integration merge.
-    // Response shape is frozen per contract §8 — do not change field names.
+    
     const summary = {
       availableAssets: 0,
       allocatedAssets: 0,

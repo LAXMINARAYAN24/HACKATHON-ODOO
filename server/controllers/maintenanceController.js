@@ -1,10 +1,7 @@
 const MaintenanceRequest = require('../models/MaintenanceRequest');
 const Asset = require('../models/Asset');
 
-// ------------------------------------------------------------------
-// POST /api/maintenance
-// Raise a new maintenance request
-// ------------------------------------------------------------------
+
 const createRequest = async (req, res) => {
   try {
     const { asset, issue, priority, photoUrl } = req.body;
@@ -16,7 +13,7 @@ const createRequest = async (req, res) => {
       });
     }
 
-    // Verify the asset exists
+    
     const assetDoc = await Asset.findById(asset);
     if (!assetDoc) {
       return res.status(404).json({
@@ -60,10 +57,7 @@ const createRequest = async (req, res) => {
   }
 };
 
-// ------------------------------------------------------------------
-// GET /api/maintenance
-// List all maintenance requests with optional filters
-// ------------------------------------------------------------------
+
 const getAllRequests = async (req, res) => {
   try {
     const { status, priority, asset } = req.query;
@@ -94,10 +88,7 @@ const getAllRequests = async (req, res) => {
   }
 };
 
-// ------------------------------------------------------------------
-// GET /api/maintenance/:id
-// Get a single maintenance request by ID
-// ------------------------------------------------------------------
+
 const getRequestById = async (req, res) => {
   try {
     const request = await MaintenanceRequest.findById(req.params.id)
@@ -127,11 +118,7 @@ const getRequestById = async (req, res) => {
   }
 };
 
-// ------------------------------------------------------------------
-// PATCH /api/maintenance/:id/approve
-// Approve a maintenance request
-// SIDE EFFECT: Asset.status → 'Under Maintenance'
-// ------------------------------------------------------------------
+
 const approveRequest = async (req, res) => {
   try {
     const request = await MaintenanceRequest.findById(req.params.id);
@@ -150,12 +137,12 @@ const approveRequest = async (req, res) => {
       });
     }
 
-    // Update request status
+   
     request.status = 'approved';
     request.approvedBy = req.user.id;
     await request.save();
 
-    // CROSS-MODULE SIDE EFFECT: Set asset status to 'Under Maintenance'
+    
     await Asset.findByIdAndUpdate(request.asset, {
       status: 'Under Maintenance',
     });
@@ -179,10 +166,7 @@ const approveRequest = async (req, res) => {
   }
 };
 
-// ------------------------------------------------------------------
-// PATCH /api/maintenance/:id/reject
-// Reject a maintenance request
-// ------------------------------------------------------------------
+
 const rejectRequest = async (req, res) => {
   try {
     const { remarks } = req.body;
@@ -226,10 +210,7 @@ const rejectRequest = async (req, res) => {
   }
 };
 
-// ------------------------------------------------------------------
-// PATCH /api/maintenance/:id/assign
-// Assign a technician to an approved request
-// ------------------------------------------------------------------
+
 const assignTechnician = async (req, res) => {
   try {
     const { technicianId } = req.body;
@@ -280,10 +261,7 @@ const assignTechnician = async (req, res) => {
   }
 };
 
-// ------------------------------------------------------------------
-// PATCH /api/maintenance/:id/start
-// Mark maintenance work as in progress
-// ------------------------------------------------------------------
+
 const startProgress = async (req, res) => {
   try {
     const request = await MaintenanceRequest.findById(req.params.id);
@@ -325,11 +303,7 @@ const startProgress = async (req, res) => {
   }
 };
 
-// ------------------------------------------------------------------
-// PATCH /api/maintenance/:id/resolve
-// Resolve a maintenance request
-// SIDE EFFECT: Asset.status → 'Available'
-// ------------------------------------------------------------------
+
 const resolveRequest = async (req, res) => {
   try {
     const { remarks } = req.body;
@@ -349,13 +323,13 @@ const resolveRequest = async (req, res) => {
       });
     }
 
-    // Update request
+    
     request.status = 'resolved';
     request.resolvedAt = new Date();
     if (remarks) request.remarks = remarks;
     await request.save();
 
-    // CROSS-MODULE SIDE EFFECT: Set asset status back to 'Available'
+    
     await Asset.findByIdAndUpdate(request.asset, {
       status: 'Available',
     });
