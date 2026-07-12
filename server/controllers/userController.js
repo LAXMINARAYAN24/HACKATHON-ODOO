@@ -1,6 +1,6 @@
 import User from "../models/User.js";
 
-// GET /api/users
+
 export const getUsers = async (req, res) => {
   try {
     const users = await User.find()
@@ -21,7 +21,7 @@ export const getUsers = async (req, res) => {
   }
 };
 
-// PATCH /api/users/:id/role
+
 export const updateUserRole = async (req, res) => {
   try {
     const { id } = req.params;
@@ -64,7 +64,6 @@ export const updateUserRole = async (req, res) => {
   }
 };
 
-// PATCH /api/users/:id/status
 export const updateUserStatus = async (req, res) => {
   try {
     const { id } = req.params;
@@ -106,7 +105,7 @@ export const updateUserStatus = async (req, res) => {
   }
 };
 
-// PATCH /api/users/:id/department
+
 export const updateUserDepartment = async (req, res) => {
   try {
     const { id } = req.params;
