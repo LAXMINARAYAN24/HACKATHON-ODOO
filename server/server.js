@@ -13,9 +13,9 @@ import userRoutes from "./routes/users.js";
 // --- Teammate integration blocks (activate after branch merge) ---
 //
 // JENY (feat/assets-allocation):
-// import assetRoutes from "./routes/assets.js";
-// import allocationRoutes from "./routes/allocations.js";
-// import transferRoutes from "./routes/transfers.js";
+import assetRoutes from "./routes/assets.js";
+import allocationRoutes from "./routes/allocations.js";
+import transferRoutes from "./routes/transfers.js";
 //
 // MAHEK (feat/booking-maintenance):
 import bookingRoutes from "./routes/bookings.js";
@@ -54,9 +54,9 @@ app.use("/api/users", userRoutes);
 // ── Teammate routes (activate after merge) 
 //
 // JENY:
-// app.use("/api/assets", assetRoutes);
-// app.use("/api/allocations", allocationRoutes);
-// app.use("/api/transfers", transferRoutes);
+app.use("/api/assets", assetRoutes);
+app.use("/api/allocations", allocationRoutes);
+app.use("/api/transfers", transferRoutes);
 //
 // MAHEK:
 app.use("/api/bookings", bookingRoutes);
