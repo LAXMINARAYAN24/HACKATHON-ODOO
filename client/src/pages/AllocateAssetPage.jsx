@@ -9,6 +9,7 @@ export default function AllocateAssetPage() {
   const [assets, setAssets] = useState([]);
   const [users, setUsers] = useState([]);
   const [departments, setDepartments] = useState([]);
+  const [apiError, setApiError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,10 +19,13 @@ export default function AllocateAssetPage() {
   }, []);
 
   const onSubmit = async (data) => {
+    setApiError('');
     try {
       await api.post('/allocations', data);
       navigate('/allocations');
     } catch (err) {
+      const msg = err.response?.data?.message || 'Failed to allocate asset';
+      setApiError(msg);
       console.error('Failed to allocate asset', err);
     }
   };
@@ -34,6 +38,16 @@ export default function AllocateAssetPage() {
       </div>
 
       <div className="card">
+        {apiError && (
+          <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/25 text-red-400 text-sm">
+            {apiError}
+          </div>
+        )}
+        {assets.length === 0 && (
+          <div className="mb-4 p-3 rounded-lg bg-amber-500/10 border border-amber-500/25 text-amber-400 text-sm">
+            No available assets found. Add an asset with "Available" status first.
+          </div>
+        )}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-slate-300 mb-1">Asset *</label>
@@ -84,7 +98,7 @@ export default function AllocateAssetPage() {
             <button type="button" onClick={() => navigate('/allocations')} className="px-4 py-2 text-slate-400 hover:text-white transition-colors">
               Cancel
             </button>
-            <button type="submit" disabled={isSubmitting} className="btn-primary">
+            <button type="submit" disabled={isSubmitting || assets.length === 0} className="btn-primary">
               {isSubmitting ? 'Allocating…' : 'Allocate Asset'}
             </button>
           </div>
@@ -93,3 +107,4 @@ export default function AllocateAssetPage() {
     </div>
   );
 }
+
