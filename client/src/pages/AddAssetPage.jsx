@@ -10,6 +10,7 @@ export default function AddAssetPage() {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
   const [categories, setCategories] = useState([]);
   const [departments, setDepartments] = useState([]);
+  const [apiError, setApiError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,6 +19,7 @@ export default function AddAssetPage() {
   }, []);
 
   const onSubmit = async (data) => {
+    setApiError('');
     const formData = new FormData();
     Object.keys(data).forEach(key => {
       if (key === 'photo') {
@@ -31,6 +33,10 @@ export default function AddAssetPage() {
       await api.post('/assets', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
       navigate('/assets');
     } catch (err) {
+      const msg = err.response?.data?.message || err.response?.data?.errors
+        ? Object.values(err.response.data.errors).join(', ')
+        : 'Failed to create asset';
+      setApiError(msg);
       console.error('Failed to create asset', err);
     }
   };
@@ -43,6 +49,11 @@ export default function AddAssetPage() {
       </div>
 
       <div className="card">
+        {apiError && (
+          <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/25 text-red-400 text-sm">
+            {apiError}
+          </div>
+        )}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -79,6 +90,30 @@ export default function AddAssetPage() {
                 <option value="">Select Department</option>
                 {departments.map(d => <option key={d._id} value={d._id}>{d.name}</option>)}
               </select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-1">Acquisition Date *</label>
+              <input
+                type="date"
+                {...register('acquisitionDate', { required: 'Acquisition date is required' })}
+                className="input-field w-full"
+              />
+              {errors.acquisitionDate && <p className="text-red-400 text-xs mt-1">{errors.acquisitionDate.message}</p>}
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-1">Acquisition Cost (₹) *</label>
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                {...register('acquisitionCost', { required: 'Acquisition cost is required', min: { value: 0, message: 'Must be >= 0' } })}
+                className="input-field w-full"
+                placeholder="e.g. 45000"
+              />
+              {errors.acquisitionCost && <p className="text-red-400 text-xs mt-1">{errors.acquisitionCost.message}</p>}
             </div>
           </div>
 
@@ -126,3 +161,4 @@ export default function AddAssetPage() {
     </div>
   );
 }
+
